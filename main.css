@@ -1,0 +1,83 @@
+*{
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+body{
+  font-size: 32px;
+}
+
+.mb-20{
+  margin-bottom: 20px;
+}
+
+.container{
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title{
+  position: relative;
+  font-size: 48px;
+}
+
+.marker{
+  width: 100%;
+  height:  35%;
+  background-color: #a2a2a270;
+  position: absolute;
+  bottom: 5%;
+  z-index: -1;
+}
+
+/* スタートボタン */
+/* border-radiusが角丸となる */
+.startButton{
+  background-color: #333;
+  color: #fff;
+  padding: 4px 60px;
+  border: none;
+  outline: none;
+  border-radius: 8px; 
+  cursor: pointer;
+}
+
+/* ホバーした時に白くなる */
+.startButton:hover{
+  opacity: 0.7;
+}
+
+.question{
+  color: gray;
+}
+
+.clear{
+  color: #03a9f4;
+}
+
+/* テキストボックスの線を消す ただ背景と同化に注意する*/
+/* text-align: center;を抜くと左からの入力となってしまう。 */
+.typeForm{
+  text-align: center;
+  outline: none;
+  border: none;
+}
+
+.typeFormWrapprer{
+  border-bottom: 1px solid gray;
+}
+
+/* 変化が0.3秒で起こる */
+.gauge{
+  height: 12px;
+  transition: all .3s ease;
+}
+
+/* gaugeWrapperで背景同化を防ぐ */
+/* solidは2つをまとめて1つとして表示する */
+.gaugeWrapper{
+  border: 1px solid;
+  height: 12px;
+}

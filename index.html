@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="main.css">
+
+  <!-- vue jsの読み込み-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+
+
+
+
+<body>
+
+  <!-- ここr必要? -->
+  <div id="app" class="container">
+    <div class="title">
+      <h1>Typing Game</h1>
+      <div class="marker"></div>
+    </div>
+
+    <!-- ボタン -->
+    <!-- gameStartが押されたらスタートするようにしている -->
+    <!-- startFlgがtrueになった場合に、startButtonが非表示となる -->
+    <button v-if = "startFlg!=true" class="startButton mb-20" @click = "gameStart">START</button>
+
+    <!-- ここからテキストとなる -->
+    <!-- startFlgがtrueの時だけここのテキストが出現する -->
+    <div v-if="startFlg">
+    <div class="question mb-20">{{ current_question}}</div>
+    <div v-if="current_question_counts == question_counds" class="clear">Clear!</div>
+    <div class="typeFormWrapprer mb-20">
+      <input id= 'typeForm' v-model= "typeBox" type = "text" class="typeForm">
+    </div>
+
+    <!-- gaugeWrapperで背景同化を防ぐ -->
+    <div class="gaugeWrapper mb-20"></div>
+    <div v-bind:style="styleObject" class="gauge"></div>
+  </div>
+  <!-- ここは配列の数 3/5みたいな形を維持している -->
+  <div>{{current_question_counts}}/{{question_counts}}</div>
+</div>
+
+  <!-- startFlgがゲームがスタートしているか確認する -->
+  <!-- current_questionが今、現在の問題となる -->
+  <script>
+new Vue({
+  el:"#app",
+  data:{
+    startFlg:"",
+    current_question:"",
+    // テキスト導入　さらに追加
+    questions:[
+      'apple',
+      'banana',
+      'chocolate',
+      'donut',
+      'espresso',
+    ],
+    typeBox:"",
+    current_question_counts:0,
+    question_counts:0
+  }, 
+  computed:{
+    styleObject:function(){
+width = 20 * this.current_question_counts + "%"
+// 全問正解の場合は水色にする
+if (this.current_question_counts == 5){
+  color = "#03a9f4"
+} else {
+  // 全問正解以外はオレンジ色にする
+  color = "orange"
+}
+// 正解する度に色が変わっていく
+return{
+  'width':width,
+  'background-color': color
+}
+    }
+  },
+
+  // $next.focusで開始ボタンを押すと自動でテキスト部分に打てるようになる。
+  methods:{
+    gameStart:function(){
+      this.startFlg = true;
+      this.$nextTick(function(){
+        document.getElementById('typeForm').focus()
+      })
+    }
+  },
+  mounted:function(){
+    this.current_question = this.questions[0]
+    this.question_counts = this.questions.length
+  },
+  // spliceで要素の削除をしている
+  watch:{
+    typeBox:function(e){
+      if (e == this.current_question){
+        this.questions.splice(0,1)
+        // 1つ目を取得する
+        this.current_question = this.questions[0]
+        this.typeBox = ""
+        // 正解する度にカウントが増えるようにする。
+        this.current_question_counts = this.current_question_counts + 1
+      }
+  }
+}
+})
+</script>
+</body>
+</html>
